@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+.active {
+  font-weight: 900;
+  color: black;
+}
+
+:root {
+  --bg-color-light: white;
+  --bg-color-dark: #08090a;
+  --text-color-light: #000000;
+  --text-color-dark: #ffffff;
+}
+
+html {
+  background: var(--bg-color-light);
+  color: var(--text-color-light);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+html.dark {
+  background: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}

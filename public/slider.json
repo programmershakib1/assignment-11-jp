@@ -1,0 +1,33 @@
+[
+  {
+    "image": "https://i.ibb.co.com/BGm0dHZ/graduation-cap-sits-top-stack-books-1.jpg",
+    "title": "Global Opportunity Scholarship - Study Abroad",
+    "description": "An exciting opportunity for students to study abroad with full financial support. Apply now to explore the world while earning your degree!",
+    "points": [
+      "Fully funded tuition for international students",
+      "Eligible for students in all fields of study",
+      "Experience life in a new country"
+    ]
+  },
+
+  {
+    "image": "https://i.ibb.co.com/4TRv5VG/system-scholarships.jpg",
+    "title": "Next Generation Scholars Program - Worldwide",
+    "description": "Empowering students to achieve academic excellence and professional growth with comprehensive support.",
+    "points": [
+      "Open to undergraduate and postgraduate students",
+      "Covers tuition fees and living expenses",
+      "Opportunities for internships and skill development"
+    ]
+  },
+  {
+    "image": "https://i.ibb.co.com/PcXy2gq/scholarship213.jpg",
+    "title": "Tech Innovator Scholarship - United States",
+    "description": "Aimed at students passionate about technology and innovation. This scholarship provides full funding for tech enthusiasts to advance their education.",
+    "points": [
+      "Scholarship for aspiring engineers and tech professionals",
+      "Full coverage of tuition and living expenses",
+      "Gain access to a global network of innovators"
+    ]
+  }
+]
