@@ -3,7 +3,13 @@ import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState, useEffect } from "react";
@@ -18,6 +24,7 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    touchAction: "none",
   };
 
   const handleCategorySelect = (newCategory) => {
@@ -101,10 +108,8 @@ const MyTasks = () => {
   const [localTasks, setLocalTasks] = useState(() => tasks);
 
   useEffect(() => {
-    if (JSON.stringify(localTasks) !== JSON.stringify(tasks)) {
-      setLocalTasks(tasks);
-    }
-  }, [tasks, localTasks]);
+    setLocalTasks(tasks);
+  }, [tasks]);
 
   const toDoTasks = localTasks.filter((task) => task.category === "to_do");
   const inProgressTasks = localTasks.filter(
@@ -137,7 +142,6 @@ const MyTasks = () => {
 
     if (response.data.success) {
       toast.success("Order updated successfully!");
-      await refetch();
     } else {
       toast.error("Failed to update order!");
     }
@@ -153,6 +157,14 @@ const MyTasks = () => {
     }
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: { distance: 5 },
+      onActivation: (event) =>
+        event.target?.setPointerCapture?.(event.pointerId),
+    })
+  );
+
   if (isLoading) {
     return (
       <div className="my-20 text-center">
@@ -162,7 +174,11 @@ const MyTasks = () => {
   }
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
       <div className="grid lg:grid-cols-3 gap-5 mt-10 md:mt-20 mx-5 md:mx-0">
         <div className="p-4 bg-gray-100 rounded-xl">
           <h2 className="font-bold text-xl mb-5">To-Do</h2>
