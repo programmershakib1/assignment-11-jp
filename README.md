@@ -9,6 +9,21 @@ This is the client-side of the Task Management application. It provides an inter
 You can check out the live demo of the application here:  
 [Live Application](https://tasks-management-org.netlify.app)
 
+## Technologies Used
+
+The following technologies are used in this project:
+
+- **React.js**: JavaScript library for building user interfaces.
+- **React Query**: Data fetching and state management.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **DaisyUI**: Component library for Tailwind CSS.
+- **Firebase**: For authentication and secure user management.
+- **Axios**: For making HTTP requests.
+- **Dnd Kit**: For implementing drag-and-drop functionality.
+- **React Router**: For handling navigation and routing.
+- **Lottie**: For adding animations to the UI.
+- **React Hook Form**: For form handling in React.
+
 ## Dependencies
 
 The following dependencies are used in this project:
