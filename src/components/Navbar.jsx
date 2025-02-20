@@ -29,7 +29,9 @@ const Navbar = () => {
       <div>
         <Link to="/" className="flex items-center gap-2">
           <img className="w-9 h-9" src={logo} alt="" />
-          <h2 className="font-black text-3xl font-row">TASKS</h2>
+          <h2 className="hidden md:block font-black text-3xl font-row">
+            TASKS
+          </h2>
         </Link>
       </div>
       <div className="hidden lg:block">

@@ -98,11 +98,13 @@ const MyTasks = () => {
     },
   });
 
-  const [localTasks, setLocalTasks] = useState([]);
+  const [localTasks, setLocalTasks] = useState(() => tasks);
 
   useEffect(() => {
-    setLocalTasks(tasks);
-  }, [tasks]);
+    if (JSON.stringify(localTasks) !== JSON.stringify(tasks)) {
+      setLocalTasks(tasks);
+    }
+  }, [tasks, localTasks]);
 
   const toDoTasks = localTasks.filter((task) => task.category === "to_do");
   const inProgressTasks = localTasks.filter(

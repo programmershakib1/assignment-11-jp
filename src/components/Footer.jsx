@@ -31,7 +31,7 @@ const Footer = () => {
       </div>
       <div className="border border-black dark:border-white mt-5"></div>
       <p className="text-center font-medium my-8">
-        © 2025 TODO. All rights Reserved.
+        © 2025 TASKS. All rights Reserved.
       </p>
     </div>
   );
