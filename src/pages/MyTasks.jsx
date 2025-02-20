@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 
 const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
+  const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task._id });
 
@@ -21,6 +22,16 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
 
   const handleCategorySelect = (newCategory) => {
     handleCategoryChange(task._id, newCategory);
+  };
+
+  const handleDeleteForm = (e) => {
+    e.preventDefault();
+    handleDelete(task?._id);
+  };
+
+  const handleEditForm = (e) => {
+    e.preventDefault();
+    navigate(`/editTask/${task?._id}`);
   };
 
   return (
@@ -35,17 +46,16 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
       <p className="text-sm">{task?.description}</p>
       <p className="text-gray-500">{format(new Date(task?.timestamp), "P")}</p>
       <div className="absolute bottom-5 right-4 mt-5 grid grid-cols-3 gap-10">
-        <Link to={`/editTask/${task?._id}`}>
+        <form onSubmit={handleEditForm} action="">
           <button className="w-full bg-black text-white py-1 px-4 rounded-md">
             Edit
           </button>
-        </Link>
-        <button
-          onClick={() => handleDelete(task?._id)}
-          className="w-full bg-black text-white py-1 px-4 rounded-md"
-        >
-          Delete
-        </button>
+        </form>
+        <form onSubmit={handleDeleteForm} action="">
+          <button className="w-full bg-black text-white py-1 px-4 rounded-md">
+            Delete
+          </button>
+        </form>
         <select
           onChange={(e) => handleCategorySelect(e.target.value)}
           value={task.category}
