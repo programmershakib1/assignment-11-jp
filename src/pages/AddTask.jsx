@@ -35,7 +35,7 @@ const AddTask = () => {
     });
   };
   return (
-    <div className="mx-5 md:mx-0 mt-20">
+    <div className="mx-5 md:mx-0 mt-10 md:mt-20">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="w-full flex flex-col">
           <label>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import useAuth from "../hooks/useAuth";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const { user, handleSingOut } = useAuth();
@@ -27,6 +28,7 @@ const Navbar = () => {
     <div className="mx-5 md:mx-0 flex justify-between items-center mt-10">
       <div>
         <Link to="/" className="flex items-center gap-2">
+          <img className="w-9 h-9" src={logo} alt="" />
           <h2 className="font-black text-3xl font-row">TASKS</h2>
         </Link>
       </div>
@@ -61,7 +63,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={handleSingOut}
-              className="hidden md:block bg-black text-white font-bold dark:lg:mr-4 py-2.5 px-7 rounded-full"
+              className="hidden md:block bg-black text-white font-bold py-2 lg:py-2.5 px-7 rounded-full"
             >
               Sign Out
             </button>
@@ -72,7 +74,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div>
-            <button className="hidden md:block bg-black text-white font-bold dark:lg:mr-4 py-2.5 px-7 rounded-full">
+            <button className="hidden md:block bg-black text-white font-bold py-2 lg:py-2.5 px-7 rounded-full">
               <Link to="/signIn">Sign In</Link>
             </button>
             <button className="block md:hidden">
@@ -83,18 +85,10 @@ const Navbar = () => {
           </div>
         )}
         <div className="block lg:hidden">
-          {theme === "light" ? (
-            <i
-              className="fa-solid fa-bars text-4xl text-black dark:mr-4"
-              onClick={toggleSidebar}
-            ></i>
-          ) : (
-            <i
-              className="fa-solid fa-bars-staggered text-4xl dark:mr-4"
-              onClick={toggleSidebar}
-            ></i>
-          )}
-
+          <i
+            className="fa-solid fa-bars text-4xl dark:text-white"
+            onClick={toggleSidebar}
+          ></i>
           <div
             className={`fixed z-10 left-0 top-0 h-screen w-2/3 md:w-1/3 bg-gray-800 transform ${
               isOpen ? "translate-x-0" : "-translate-x-full"

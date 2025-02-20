@@ -45,7 +45,7 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
       <h4 className="font-bold">{task?.title}</h4>
       <p className="text-sm">{task?.description}</p>
       <p className="text-gray-500">{format(new Date(task?.timestamp), "P")}</p>
-      <div className="absolute bottom-5 right-4 mt-5 grid grid-cols-3 gap-10">
+      <div className="absolute bottom-5 right-4 left-4 mt-5 grid grid-cols-3 gap-5 md:gap-10">
         <form onSubmit={handleEditForm} action="">
           <button className="w-full bg-black text-white py-1 px-4 rounded-md">
             Edit
@@ -161,7 +161,7 @@ const MyTasks = () => {
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div className="grid lg:grid-cols-3 gap-5 mt-20">
+      <div className="grid lg:grid-cols-3 gap-5 mt-10 md:mt-20 mx-5 md:mx-0">
         <div className="p-4 bg-gray-100 rounded-xl">
           <h2 className="font-bold text-xl mb-5">To-Do</h2>
           <div className="grid gap-3">

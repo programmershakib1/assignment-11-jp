@@ -53,7 +53,7 @@ const EditTask = () => {
       </div>
     );
   return (
-    <div>
+    <div className="mx-5 md:mx-0 mt-10 md:mt-20">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <div className="w-full flex flex-col">
           <label>
@@ -117,7 +117,7 @@ const EditTask = () => {
             <p className="text-red-500">{errors.description.message}</p>
           )}
         </div>
-        <button className="w-44 bg-black text-white py-2 px-10 font-bold">
+        <button className="mt-5 w-32 bg-black text-white py-2 px-10 font-bold rounded-md">
           Submit
         </button>
       </form>
