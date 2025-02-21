@@ -16,6 +16,10 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 
+import io from "socket.io-client";
+
+const socket = io(`${import.meta.env.VITE_SERVER_URL}`);
+
 const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
   const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -111,6 +115,16 @@ const MyTasks = () => {
     setLocalTasks(tasks);
   }, [tasks]);
 
+  useEffect(() => {
+    socket.on("taskUpdate", (updatedTasks) => {
+      setLocalTasks(updatedTasks);
+    });
+
+    return () => {
+      socket.off("taskUpdate");
+    };
+  }, []);
+
   const toDoTasks = localTasks.filter((task) => task.category === "to_do");
   const inProgressTasks = localTasks.filter(
     (task) => task.category === "in_progress"
@@ -133,17 +147,26 @@ const MyTasks = () => {
     const oldIndex = localTasks.findIndex((task) => task._id === active.id);
     const newIndex = localTasks.findIndex((task) => task._id === over.id);
 
+    if (oldIndex === -1 || newIndex === -1) return;
+
     const newTasks = arrayMove(localTasks, oldIndex, newIndex);
+    const previousTasks = [...localTasks];
     setLocalTasks(newTasks);
 
-    const response = await axiosSecure.post("/update-task-order", {
-      tasks: newTasks,
-    });
+    try {
+      const response = await axiosSecure.post("/update-task-order", {
+        tasks: newTasks,
+      });
 
-    if (response.data.success) {
-      toast.success("Order updated successfully!");
-    } else {
-      toast.error("Failed to update order!");
+      if (!response.data.success) {
+        setLocalTasks(previousTasks);
+        toast.error("Failed to update order!");
+      } else {
+        toast.success("Order updated successfully!");
+      }
+    } catch {
+      setLocalTasks(previousTasks);
+      toast.error("Something went wrong!");
     }
   };
 
