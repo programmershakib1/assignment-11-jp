@@ -23,22 +23,22 @@ const Banner = () => {
   return (
     <div className="mx-5 md:mx-0 mt-10 md:mt-20">
       <Swiper
-        className="h-64 md:h-[400px] lg:h-[600px] mx-auto rounded-2xl relative"
+        className="h-64 md:h-[400px] lg:h-[700px] mx-auto rounded-2xl relative"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
         autoplay={{
-          delay: 5200,
+          delay: 5000,
           disableOnInteraction: false,
         }}
       >
         {slider.map((s, idx) => (
           <SwiperSlide key={idx} className="relative">
             <img className="w-full h-full" src={s.image} alt={s.title} />
-            <div className="absolute top-0 w-full h-full bg-gradient-to-b from-black/60 via-black/20 to-black/80 flex flex-col justify-center text-white p-10">
-              <h2 className="text-center md:text-3xl lg:text-5xl font-bold mb-1 md:mb-5 ml-5">
+            <div className="absolute top-0 w-full h-full bg-gradient-to-b from-black/60 via-black/60 to-black/80 flex flex-col justify-center text-white p-10">
+              <h2 className="text-center md:text-3xl lg:text-6xl font-bold mb-1 md:mb-5 ml-5">
                 <Typewriter
                   words={[s.title]}
                   loop={0}

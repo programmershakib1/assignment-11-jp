@@ -77,7 +77,7 @@ const SignUp = () => {
         setUser({ displayName: name, photoURL: imageUrl });
 
         setLoading(false);
-        toast.success("User sign up successful");
+        toast.success(`welcome ${name}`);
         navigate(locations ? locations : "/");
       })
       .catch((error) => {
@@ -187,7 +187,7 @@ const SignUp = () => {
               handleGoogleLogin()
                 .then((result) => {
                   setUser(result?.user);
-                  toast.success("User sign up successful");
+                  toast.success(`welcome ${result?.user?.displayName}`);
                   navigate(locations ? locations : "/");
                 })
                 .catch((error) => {
@@ -205,7 +205,7 @@ const SignUp = () => {
               handleGithubLogin()
                 .then((result) => {
                   setUser(result?.user);
-                  toast.success("User sign up successful");
+                  toast.success(`welcome ${result?.user?.displayName}`);
                   navigate(locations ? locations : "/");
                 })
                 .catch((error) => {

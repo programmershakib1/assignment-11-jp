@@ -28,7 +28,7 @@ const SignIn = () => {
         e.target.reset();
         setUser(result?.user);
         setLoading(false);
-        toast.success("User sign in successful");
+        toast.success(`welcome back ${result?.user?.displayName}`);
         if (locations) {
           navigate(locations);
         } else {
@@ -99,7 +99,7 @@ const SignIn = () => {
               handleGoogleLogin()
                 .then((result) => {
                   setUser(result.user);
-                  toast.success("User sign in successful");
+                  toast.success(`welcome back ${result?.user?.displayName}`);
                   if (locations) {
                     navigate(locations);
                   } else {
@@ -120,7 +120,7 @@ const SignIn = () => {
               handleGithubLogin()
                 .then((result) => {
                   setUser(result.user);
-                  toast.success("User sign in successful");
+                  toast.success(`welcome back ${result?.user?.displayName}`);
                   if (locations) {
                     navigate(locations);
                   } else {

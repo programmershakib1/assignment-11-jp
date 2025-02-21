@@ -22,6 +22,8 @@ const AddTask = () => {
       description,
       order: 0,
       timestamp: new Date().toISOString(),
+      hours: new Date().getHours(),
+      minutes: new Date().getMinutes(),
       user_name: user?.displayName,
       user_email: user?.email,
       user_image: user?.photoURL,
@@ -29,7 +31,7 @@ const AddTask = () => {
 
     axiosSecure.post("/task", taskInfo).then((res) => {
       if (res.data.insertedId) {
-        toast.success("success");
+        toast.success("Task added successfully.");
         reset();
       }
     });

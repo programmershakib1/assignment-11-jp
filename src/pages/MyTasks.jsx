@@ -15,6 +15,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { PropTypes } from "prop-types";
+import Swal from "sweetalert2";
 
 import io from "socket.io-client";
 
@@ -55,22 +56,25 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
     >
       <h4 className="font-bold">{task?.title}</h4>
       <p className="text-sm">{task?.description}</p>
-      <p className="text-gray-500">{format(new Date(task?.timestamp), "P")}</p>
+      <p className="text-gray-500">
+        {format(new Date(task?.timestamp), "P")}{" "}
+        {format(new Date(task?.timestamp), "HH:mm")}
+      </p>
       <div className="absolute bottom-5 right-4 left-4 mt-5 grid grid-cols-3 gap-5 md:gap-10">
         <form onSubmit={handleEditForm} action="">
-          <button className="w-full bg-black text-white py-1 px-4 rounded-md">
+          <button className="w-full bg-black text-white py-1 px-4 rounded-md cursor-pointer">
             Edit
           </button>
         </form>
         <form onSubmit={handleDeleteForm} action="">
-          <button className="w-full bg-black text-white py-1 px-4 rounded-md">
+          <button className="w-full bg-black text-white py-1 px-4 rounded-md cursor-pointer">
             Delete
           </button>
         </form>
         <select
           onChange={(e) => handleCategorySelect(e.target.value)}
           value={task.category}
-          className="w-full py-1 px-2 bg-gray-300 rounded-md"
+          className="w-full py-1 px-2 bg-gray-300 rounded-md cursor-pointer"
         >
           <option value="to_do">To-Do</option>
           <option value="in_progress">In Progress</option>
@@ -129,13 +133,29 @@ const MyTasks = () => {
   const inProgressTasks = localTasks.filter(
     (task) => task.category === "in_progress"
   );
+
   const doneTasks = localTasks.filter((task) => task.category === "done");
 
   const handleDelete = (id) => {
-    axiosSecure.delete(`/task/${id}`).then((res) => {
-      if (res.data.deletedCount > 0) {
-        toast.success("Deleted successfully!");
-        refetch();
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/task/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+          }
+        });
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your task has been deleted.",
+          icon: "success",
+        });
       }
     });
   };

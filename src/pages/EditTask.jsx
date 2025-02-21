@@ -32,6 +32,8 @@ const EditTask = () => {
       description,
       order: 0,
       timestamp: task?.timestamp,
+      hours: task?.hours,
+      minutes: task?.minutes,
       user_name: task?.user_name,
       user_email: task?.user_email,
       user_image: task?.user_image,
@@ -39,7 +41,7 @@ const EditTask = () => {
 
     axiosSecure.put(`/task/${id}`, taskInfo).then((res) => {
       if (res.data.modifiedCount > 0) {
-        toast.success("success");
+        toast.success("Task editing successful.");
         reset();
         navigate("/myTasks");
       }
