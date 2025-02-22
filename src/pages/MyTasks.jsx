@@ -290,7 +290,7 @@ const MyTasks = () => {
               </div>
             </div>
           </div>
-        </DndContext>
+        </DndContext> 
       ) : (
         <div>
           <h2 className="font-bold md:text-left mx-5 md:mx-0">
