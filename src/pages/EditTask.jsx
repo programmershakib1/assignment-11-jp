@@ -24,16 +24,17 @@ const EditTask = () => {
   });
 
   const onSubmit = async (data) => {
-    const { title, category, description } = data;
+    const { title, category, due_date, hour, minute, description } = data;
 
     const taskInfo = {
       title,
       category,
+      due_date,
+      hour: parseInt(hour),
+      minute: parseInt(minute),
       description,
       order: 0,
       timestamp: task?.timestamp,
-      hours: task?.hours,
-      minutes: task?.minutes,
       user_name: task?.user_name,
       user_email: task?.user_email,
       user_image: task?.user_image,
@@ -102,6 +103,58 @@ const EditTask = () => {
         </div>
         <div className="w-full flex flex-col">
           <label>
+            <span className="font-semibold">Due Date</span>
+          </label>
+          <input
+            type="date"
+            defaultValue={task?.due_date}
+            className="shadow-md mt-2 p-3 rounded-full dark:bg-c"
+            {...register("due_date", {
+              required: "Due Date is required",
+            })}
+          />
+          {errors.due_date && (
+            <p className="text-red-500">{errors.due_date.message}</p>
+          )}
+        </div>
+        <div className="w-full flex flex-col">
+          <label>
+            <span className="font-semibold">Hour</span>
+          </label>
+          <input
+            type="number"
+            defaultValue={task?.hour}
+            placeholder="Hour (0-23)"
+            className="shadow-md mt-2 p-3 rounded-full dark:bg-c"
+            {...register("hour", {
+              required: "Hour is required",
+              min: { value: 0, message: "Hour must be at least 0" },
+              max: { value: 23, message: "Hour cannot exceed 23" },
+            })}
+          />
+          {errors.hour && <p className="text-red-500">{errors.hour.message}</p>}
+        </div>
+        <div className="w-full flex flex-col">
+          <label>
+            <span className="font-semibold">Minute</span>
+          </label>
+          <input
+            type="number"
+            defaultValue={task?.minute}
+            placeholder="Minute (0-59)"
+            className="shadow-md mt-2 p-3 rounded-full dark:bg-c"
+            {...register("minute", {
+              required: "Minute is required",
+              min: { value: 0, message: "Minute must be at least 0" },
+              max: { value: 59, message: "Minute cannot exceed 59" },
+            })}
+          />
+          {errors.minute && (
+            <p className="text-red-500">{errors.minute.message}</p>
+          )}
+        </div>
+        <div className="w-full flex flex-col">
+          <label>
             <span className="font-semibold">Description</span>
           </label>
           <textarea
@@ -119,7 +172,7 @@ const EditTask = () => {
             <p className="text-red-500">{errors.description.message}</p>
           )}
         </div>
-        <button className="mt-5 w-32 bg-black text-white py-2 px-10 font-bold rounded-md">
+        <button className="mt-5 w-32 bg-black text-white dark:bg-c py-2 px-10 font-bold rounded-md">
           Submit
         </button>
       </form>

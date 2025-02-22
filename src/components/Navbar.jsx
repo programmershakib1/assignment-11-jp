@@ -65,7 +65,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={handleSingOut}
-              className="hidden md:block bg-black text-white font-bold py-2 lg:py-2.5 px-7 rounded-full"
+              className="hidden md:block bg-black text-white dark:bg-white dark:text-black font-bold py-2 lg:py-2.5 px-7 rounded-full"
             >
               Sign Out
             </button>
@@ -76,7 +76,7 @@ const Navbar = () => {
           </div>
         ) : (
           <div>
-            <button className="hidden md:block bg-black text-white font-bold py-2 lg:py-2.5 px-7 rounded-full">
+            <button className="hidden md:block bg-black text-white dark:bg-white dark:text-black font-bold py-2 lg:py-2.5 px-7 rounded-full">
               <Link to="/signIn">Sign In</Link>
             </button>
             <button className="block md:hidden">

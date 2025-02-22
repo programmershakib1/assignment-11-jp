@@ -16,6 +16,8 @@ import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { PropTypes } from "prop-types";
 import Swal from "sweetalert2";
+import Lottie from "lottie-react";
+import no from "../assets/lottie/no.json";
 
 import io from "socket.io-client";
 
@@ -23,6 +25,13 @@ const socket = io(`${import.meta.env.VITE_SERVER_URL}`);
 
 const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
   const navigate = useNavigate();
+  const currentTime = new Date();
+  const taskDueDate = new Date(task?.due_date);
+  taskDueDate.setHours(task?.hour || 0);
+  taskDueDate.setMinutes(task?.minute || 0);
+
+  const isOverdue = taskDueDate < currentTime;
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task._id });
 
@@ -52,13 +61,16 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
       style={style}
       {...attributes}
       {...listeners}
-      className="relative min-h-44 lg:min-h-52 border p-5 rounded-xl cursor-pointer"
+      className="relative min-h-48 lg:min-h-52 border border-black p-5 rounded-xl cursor-pointer"
     >
-      <h4 className="font-bold">{task?.title}</h4>
-      <p className="text-sm">{task?.description}</p>
-      <p className="text-gray-500">
-        {format(new Date(task?.timestamp), "P")}{" "}
+      <h4 className="text-xl font-bold">{task?.title}</h4>
+      <p className="text-sm mt-1">{task?.description}</p>
+      <p className="text-gray-500 mt-2">
+        Added: {format(new Date(task?.timestamp), "P")}{" "}
         {format(new Date(task?.timestamp), "HH:mm")}
+      </p>
+      <p className={isOverdue ? "text-red-500 font-bold" : "text-gray-500"}>
+        Due: {format(taskDueDate, "P")} {format(taskDueDate, "HH:mm")}
       </p>
       <div className="absolute bottom-5 right-4 left-4 mt-5 grid grid-cols-3 gap-5 md:gap-10">
         <form onSubmit={handleEditForm} action="">
@@ -74,7 +86,7 @@ const SortableItem = ({ task, handleDelete, handleCategoryChange }) => {
         <select
           onChange={(e) => handleCategorySelect(e.target.value)}
           value={task.category}
-          className="w-full py-1 px-2 bg-gray-300 rounded-md cursor-pointer"
+          className="w-full py-1 px-2 bg-gray-300 dark:bg-black rounded-md cursor-pointer"
         >
           <option value="to_do">To-Do</option>
           <option value="in_progress">In Progress</option>
@@ -92,6 +104,9 @@ SortableItem.propTypes = {
     description: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     timestamp: PropTypes.string.isRequired,
+    due_date: PropTypes.string.isRequired,
+    hour: PropTypes.string.isRequired,
+    minute: PropTypes.string.isRequired,
   }).isRequired,
   handleDelete: PropTypes.func.isRequired,
   handleCategoryChange: PropTypes.func.isRequired,
@@ -217,61 +232,76 @@ const MyTasks = () => {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="grid lg:grid-cols-3 gap-5 mt-10 md:mt-20 mx-5 md:mx-0">
-        <div className="p-4 bg-gray-100 rounded-xl">
-          <h2 className="font-bold text-xl mb-5">To-Do</h2>
-          <div className="grid gap-3">
-            <SortableContext items={toDoTasks.map((task) => task._id)}>
-              {toDoTasks.map((task) => (
-                <SortableItem
-                  key={task._id}
-                  task={task}
-                  handleDelete={handleDelete}
-                  handleCategoryChange={handleCategoryChange}
-                />
-              ))}
-            </SortableContext>
-          </div>
-        </div>
+    <>
+      {0 < tasks.length ? (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <div className="grid lg:grid-cols-3 gap-5 mt-10 md:mt-20 mx-5 md:mx-0">
+            <div className="p-4 bg-gray-100 dark:bg-c rounded-xl">
+              <h2 className="font-bold text-xl mb-5">To-Do</h2>
+              <div className="grid gap-3">
+                <SortableContext items={toDoTasks.map((task) => task._id)}>
+                  {toDoTasks.map((task) => (
+                    <SortableItem
+                      key={task._id}
+                      task={task}
+                      handleDelete={handleDelete}
+                      handleCategoryChange={handleCategoryChange}
+                    />
+                  ))}
+                </SortableContext>
+              </div>
+            </div>
 
-        <div className="p-4 bg-gray-100 rounded-xl">
-          <h2 className="font-bold text-xl mb-5">In Progress</h2>
-          <div className="grid gap-3">
-            <SortableContext items={inProgressTasks.map((task) => task._id)}>
-              {inProgressTasks.map((task) => (
-                <SortableItem
-                  key={task._id}
-                  task={task}
-                  handleDelete={handleDelete}
-                  handleCategoryChange={handleCategoryChange}
-                />
-              ))}
-            </SortableContext>
-          </div>
-        </div>
+            <div className="p-4 bg-gray-100 dark:bg-c rounded-xl">
+              <h2 className="font-bold text-xl mb-5">In Progress</h2>
+              <div className="grid gap-3">
+                <SortableContext
+                  items={inProgressTasks.map((task) => task._id)}
+                >
+                  {inProgressTasks.map((task) => (
+                    <SortableItem
+                      key={task._id}
+                      task={task}
+                      handleDelete={handleDelete}
+                      handleCategoryChange={handleCategoryChange}
+                    />
+                  ))}
+                </SortableContext>
+              </div>
+            </div>
 
-        <div className="p-4 bg-gray-100 rounded-xl">
-          <h2 className="font-bold text-xl mb-5">Done</h2>
-          <div className="grid gap-3">
-            <SortableContext items={doneTasks.map((task) => task._id)}>
-              {doneTasks.map((task) => (
-                <SortableItem
-                  key={task._id}
-                  task={task}
-                  handleDelete={handleDelete}
-                  handleCategoryChange={handleCategoryChange}
-                />
-              ))}
-            </SortableContext>
+            <div className="p-4 bg-gray-100 dark:bg-c rounded-xl">
+              <h2 className="font-bold text-xl mb-5">Done</h2>
+              <div className="grid gap-3">
+                <SortableContext items={doneTasks.map((task) => task._id)}>
+                  {doneTasks.map((task) => (
+                    <SortableItem
+                      key={task._id}
+                      task={task}
+                      handleDelete={handleDelete}
+                      handleCategoryChange={handleCategoryChange}
+                    />
+                  ))}
+                </SortableContext>
+              </div>
+            </div>
+          </div>
+        </DndContext>
+      ) : (
+        <div>
+          <h2 className="font-bold md:text-left mt-10 md:mt-20 mx-5 md:mx-0">
+            Tasks Not Found
+          </h2>
+          <div>
+            <Lottie animationData={no} className="w-full md:h-[400px]"></Lottie>
           </div>
         </div>
-      </div>
-    </DndContext>
+      )}
+    </>
   );
 };
 

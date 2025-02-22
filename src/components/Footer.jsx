@@ -1,7 +1,9 @@
 const Footer = () => {
   return (
     <div className="mx-5 md:mx-0 mt-20 dark:text-p">
-      <h2 className="text-center text-4xl font-black">TASKS MANAGEMENT</h2>
+      <h2 className="text-center text-4xl font-black">
+        TASKS MANAGEMENT
+      </h2>
       <p className="text-center mt-5 lg:mx-52">
         Stay organized and boost your productivity with our Task Management
         Application. Effortlessly categorize tasks into To-Do, In Progress, and

@@ -1,8 +1,14 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .active {
   font-weight: 900;
   color: black;
+}
+
+html.dark .active {
+  color: white;
 }
 
 :root {
