@@ -21,9 +21,9 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="mx-5 md:mx-0 mt-10 md:mt-20">
+    <div className="mx-5 md:mx-0">
       <Swiper
-        className="h-64 md:h-[400px] lg:h-[700px] mx-auto rounded-2xl relative"
+        className="h-52 md:h-[400px] lg:h-[700px] mx-auto rounded-2xl relative"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={0}
         slidesPerView={1}

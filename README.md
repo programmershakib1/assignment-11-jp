@@ -47,7 +47,9 @@ The following dependencies are used in this project:
 - **react-router-dom**: ^7.2.0 - React Router for handling navigation and routing.
 - **react-simple-typewriter**: ^5.0.1 - A simple typewriter effect for React.
 - **react-tooltip**: ^5.28.0 - Tooltip library for React.
+- **socket.io-client**: ^4.8.1 - Client library for real-time, bidirectional event-based communication.
 - **sort-by**: ^1.2.0 - Utility for sorting arrays.
+- **sweetalert2**: ^11.17.2 - A beautiful, responsive, customizable JavaScript popup library.
 - **swiper**: ^11.2.4 - A mobile-friendly slider library for React.
 - **tailwindcss**: ^4.0.7 - Utility-first CSS framework.
 - **daisyui**: ^4.12.23 - A Tailwind CSS plugin for components.

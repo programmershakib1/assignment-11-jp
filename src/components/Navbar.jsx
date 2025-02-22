@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="mx-5 md:mx-0 flex justify-between items-center mt-10">
+    <div className="mx-5 md:mx-0 flex justify-between items-center py-10 sticky top-0 z-50 bg-white dark:bg-[#08090a]">
       <div>
         <Link to="/" className="flex items-center gap-2">
           <img className="w-9 h-9" src={logo} alt="" />

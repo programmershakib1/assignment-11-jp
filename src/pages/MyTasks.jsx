@@ -239,7 +239,7 @@ const MyTasks = () => {
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <div className="grid lg:grid-cols-3 gap-5 mt-10 md:mt-20 mx-5 md:mx-0">
+          <div className="grid lg:grid-cols-3 gap-5 mx-5 md:mx-0">
             <div className="p-4 bg-gray-100 dark:bg-c rounded-xl">
               <h2 className="font-bold text-xl mb-5">To-Do</h2>
               <div className="grid gap-3">
@@ -293,7 +293,7 @@ const MyTasks = () => {
         </DndContext>
       ) : (
         <div>
-          <h2 className="font-bold md:text-left mt-10 md:mt-20 mx-5 md:mx-0">
+          <h2 className="font-bold md:text-left mx-5 md:mx-0">
             Tasks Not Found
           </h2>
           <div>

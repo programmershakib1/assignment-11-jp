@@ -46,7 +46,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-10 md:mt-20">
+    <div className="flex flex-col items-center mt-10">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center w-full"
